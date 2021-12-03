@@ -1,12 +1,12 @@
 <div class="container">
     <h2 class="text-center">Gestion des livres</h2>
-    <form class="bordure">
+    <form class="bordure" [formGroup]="livreForm" (ngSubmit)="onSubmit()">
         <label> Titre:</label>
-        <input type="text" class="form-control" >
+        <input type="text" class="form-control" formControlName="titre">
         <label> Prix:</label>
-        <input type="text" class="form-control" > <br>
+        <input type="text" class="form-control" formControlName="prix"> <br>
         <label>
-            <input type="checkbox" > Nouvelle édition
+            <input type="checkbox" formControlName="nouveau"> Nouvelle édition
         </label>
         <br>
         <button class="btn btn-dark"> Ajouter</button>
@@ -25,9 +25,29 @@
             </tr>            
         </thead>
         <tbody>
+            <tr *ngFor="let livre of lesLivres">
+                <td> {{livre.id}} </td>
+                <td> {{livre.titre}} </td>
+                <td> {{livre.prix |number :'.3'}} DT </td>
+                <td>
+                    <input type="checkbox" [checked]= "livre.nouveau" disabled> Nouveau
+                </td>
+                <td>
+                    <input type="button" value= "Modifier" 
+                    (click)="onModifier(livre.id)" class="btn btn-warning">
+                </td>
+                <td>
+                    <input type="button" value= "Supprimer" 
+                    (click)="onSupprimer(livre.id)" class="btn btn-info">
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
+
+{{lesLivres |json}}
+
+
 
 
 
